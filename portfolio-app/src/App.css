@@ -1,0 +1,10 @@
+.App {
+  padding-top: 60px; /* Reduced from 76px to match thinner navbar */
+}
+
+/* For smaller screens */
+@media (max-width: 768px) {
+  .App {
+    padding-top: 56px; /* Further reduced for mobile */
+  }
+}
