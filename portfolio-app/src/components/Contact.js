@@ -30,7 +30,7 @@ const Contact = () => {
     {
       icon: '📍',
       title: 'Location',
-      value: 'Arba Minch, Ethiopia',
+      value: 'Addis Ababa, Ethiopia',
       link: '#'
     },
     {

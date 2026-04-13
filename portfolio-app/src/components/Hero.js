@@ -1,9 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import profileImage from '../assets/pp_2.jpg';
 
 const Hero = () => {
   const [isGlowing, setIsGlowing] = useState(false);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  
+  const fullText = "Hi, I'm Hawi Samuel";
+  const typingSpeed = 200;
+  const deletingSpeed = 100;
+  const pauseTime = 2000;
+
+  useEffect(() => {
+    let timer;
+    
+    const handleTyping = () => {
+      setDisplayText(prev => {
+        if (!isDeleting && prev === fullText) {
+          timer = setTimeout(() => setIsDeleting(true), pauseTime);
+          return prev;
+        }
+        
+        if (isDeleting && prev === '') {
+          setIsDeleting(false);
+          setLoopNum(loopNum + 1);
+          return prev;
+        }
+        
+        if (!isDeleting) {
+          return fullText.slice(0, prev.length + 1);
+        } else {
+          return fullText.slice(0, prev.length - 1);
+        }
+      });
+    };
+    
+    timer = setTimeout(handleTyping, isDeleting ? deletingSpeed : typingSpeed);
+    
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, fullText, loopNum]);
 
   const handleImageHover = () => {
     setIsGlowing(!isGlowing);
@@ -55,40 +92,74 @@ const Hero = () => {
                 className="text-uppercase fw-bold mb-3"
                 style={{ color: '#F8BBD9', letterSpacing: '3px' }}
               >
-                Welcome to My Portfolio
+                WELCOME TO MY PORTFOLIO
               </h6>
               
+              {/* Typing Animation for Name - FIXED: Responsive font size */}
               <h1 
-                className="display-3 fw-bold mb-4"
+                className="fw-bold mb-4"
                 style={{ 
                   color: '#FFFFFF',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                  fontSize: 'clamp(1.8rem, 6vw, 3.5rem)',
+                  minHeight: 'auto'
                 }}
               >
-                Hi, I'm{' '}
                 <span 
                   style={{ 
                     color: '#F8BBD9',
                     background: 'linear-gradient(45deg, #F8BBD9, #FF80AB)',
                     WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent'
+                    WebkitTextFillColor: 'transparent',
+                    borderRight: '3px solid #F8BBD9',
+                    paddingRight: '5px'
                   }}
                 >
-                  Hawi Samuel
+                  {displayText}
                 </span>
+                <span style={{ opacity: 0.7, fontSize: '0.9em' }}>_</span>
               </h1>
               
+              {/* Updated Description */}
               <p 
-                className="lead mb-5"
+                className="mb-4"
                 style={{ 
                   color: '#E1F5FE',
-                  fontSize: '1.25rem',
+                  fontSize: 'clamp(1rem, 4vw, 1.2rem)',
                   lineHeight: '1.6'
                 }}
               >
-                I create beautiful, functional web experiences with modern technologies. 
-                Passionate about React, responsive design, and user-friendly interfaces.
+                I build beautiful FullStack applications, streamline operations as a Virtual Assistant,
+                and secure digital identities with PKI engineering.
               </p>
+              
+              <p 
+                className="mb-4"
+                style={{ 
+                  color: '#F8BBD9',
+                  fontSize: 'clamp(0.95rem, 3.5vw, 1.1rem)',
+                  lineHeight: '1.6',
+                  fontStyle: 'italic'
+                }}
+              >
+                Three skills. One mission: Creating technology that works seamlessly and securely.
+              </p>
+              
+              {/* Skills List with Checkmarks */}
+              <div className="mb-5" style={{ color: '#E1F5FE' }}>
+                <div className="mb-2" style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <span style={{ color: '#F8BBD9', fontSize: '1.3rem' }}>✓</span>
+                  <span style={{ fontSize: 'clamp(0.9rem, 3vw, 1rem)' }}>Modern Web and App Development</span>
+                </div>
+                <div className="mb-2" style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <span style={{ color: '#F8BBD9', fontSize: '1.3rem' }}>✓</span>
+                  <span style={{ fontSize: 'clamp(0.9rem, 3vw, 1rem)' }}>Professional Virtual Assistance</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                  <span style={{ color: '#F8BBD9', fontSize: '1.3rem' }}>✓</span>
+                  <span style={{ fontSize: 'clamp(0.9rem, 3vw, 1rem)' }}>Enterprise PKI & Cybersecurity</span>
+                </div>
+              </div>
             </div>
 
             {/* CTA Buttons */}
@@ -100,7 +171,7 @@ const Hero = () => {
                   border: 'none',
                   color: '#0D47A1',
                   borderRadius: '50px',
-                  fontSize: '1.1rem',
+                  fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)',
                   transition: 'all 0.3s ease',
                   boxShadow: '0 4px 15px rgba(248, 187, 217, 0.4)'
                 }}
@@ -124,7 +195,7 @@ const Hero = () => {
                   border: '2px solid #F8BBD9',
                   color: '#F8BBD9',
                   borderRadius: '50px',
-                  fontSize: '1.1rem',
+                  fontSize: 'clamp(0.9rem, 3.5vw, 1.1rem)',
                   transition: 'all 0.3s ease',
                   background: 'transparent'
                 }}
@@ -145,17 +216,16 @@ const Hero = () => {
             </div>
           </Col>
 
-          {/* Hero Image - Larger Circular Version with Bootstrap Glow */}
+          {/* Hero Image */}
           <Col lg={6} className="text-center mt-5 mt-lg-0">
             <div className="position-relative d-inline-block">
-              {/* Main Image Container with Bootstrap Shadow */}
               <div 
                 className={`rounded-circle overflow-hidden position-relative ${
                   isGlowing ? 'shadow-glow' : 'shadow-lg'
                 }`}
                 style={{
-                  width: '420px',
-                  height: '420px',
+                  width: 'clamp(250px, 40vw, 420px)',
+                  height: 'clamp(250px, 40vw, 420px)',
                   border: '6px solid rgba(248, 187, 217, 0.8)',
                   background: 'linear-gradient(135deg, #0D47A1 0%, #880E4F 100%)',
                   cursor: 'pointer',
@@ -183,7 +253,6 @@ const Hero = () => {
                 />
               </div>
 
-              {/* Bootstrap-style Glow Effect */}
               <div 
                 className={`rounded-circle position-absolute ${isGlowing ? 'pulse-glow' : ''}`}
                 style={{
@@ -198,19 +267,6 @@ const Hero = () => {
                   filter: 'blur(20px)'
                 }}
               ></div>
-
-              {/* Instruction Text */}
-              <div 
-                className="mt-4"
-                style={{
-                  color: '#E1F5FE',
-                  fontSize: '0.9rem',
-                  fontStyle: 'italic',
-                  opacity: 0.8
-                }}
-              >
-                
-              </div>
             </div>
           </Col>
         </Row>
@@ -222,11 +278,11 @@ const Hero = () => {
         style={{ color: '#F8BBD9' }}
       >
         <div className="d-flex flex-column align-items-center">
-          <span className="mb-2" style={{ fontSize: '0.9rem' }}>Scroll Down</span>
+          <span className="mb-2" style={{ fontSize: 'clamp(0.75rem, 3vw, 0.9rem)' }}>Scroll Down</span>
           <div 
             style={{
               width: '2px',
-              height: '30px',
+              height: 'clamp(20px, 5vw, 30px)',
               background: '#F8BBD9',
               animation: 'bounce 2s infinite'
             }}
@@ -234,7 +290,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Add CSS animations with proper Bootstrap-like styling */}
       <style>
         {`
           @keyframes float {
@@ -248,7 +303,6 @@ const Hero = () => {
             60% { transform: translateY(-5px); }
           }
 
-          /* Bootstrap-like Glow Animation */
           @keyframes glowPulse {
             0%, 100% {
               box-shadow: 0 0 20px rgba(248, 187, 217, 0.6),
@@ -264,7 +318,6 @@ const Hero = () => {
             }
           }
 
-          /* Conic Gradient Rotation */
           @keyframes rotateConic {
             from {
               transform: rotate(0deg);
@@ -274,13 +327,11 @@ const Hero = () => {
             }
           }
 
-          /* Pulse Glow for Outer Ring */
           .pulse-glow {
             animation: rotateConic 3s linear infinite, 
                        glowPulse 2s ease-in-out infinite;
           }
 
-          /* Shadow Glow Class */
           .shadow-glow {
             box-shadow: 0 0 25px rgba(248, 187, 217, 0.7),
                         0 0 50px rgba(248, 187, 217, 0.5),
@@ -301,7 +352,7 @@ const Hero = () => {
             }
           }
 
-          /* Responsive adjustments */
+          /* Responsive adjustments for image */
           @media (max-width: 992px) {
             .rounded-circle {
               width: 350px !important;
@@ -311,8 +362,8 @@ const Hero = () => {
 
           @media (max-width: 576px) {
             .rounded-circle {
-              width: 280px !important;
-              height: 280px !important;
+              width: 250px !important;
+              height: 250px !important;
             }
           }
         `}

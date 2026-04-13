@@ -12,13 +12,27 @@ const Projects = () => {
     },
     {
       id: 2,
+      title: 'Certificate Management System',
+      description: 'A secure certificate management system for issuing, verifying, and managing digital certificates. Built with modern web technologies to ensure secure and efficient certificate operations.',
+      technologies: ['Spring Boot', 'React', 'MySQL', 'JWT', 'REST API'],
+      featured: true
+    },
+    {
+      id: 3,
+      title: 'EthioGregor Mobile App',
+      description: 'A feature-rich mobile application built for Ethiopian users. Provides seamless user experience with intuitive design and robust functionality.',
+      technologies: ['Java', 'Android', 'XML', 'SQLite', 'Firebase'],
+      featured: false
+    },
+    {
+      id: 4,
       title: 'Personal Portfolio',
       description: 'A modern, responsive portfolio website showcasing projects and skills. Built with React and Bootstrap, featuring smooth animations and a professional design.',
       technologies: ['React', 'Bootstrap', 'CSS3', 'HTML5'],
       featured: false
     },
     {
-      id: 3,
+      id: 5,
       title: 'Event Management Platform',
       description: 'An event management platform that allows users to create, manage, and promote events. Includes ticket booking, payment processing, and attendee management features.',
       technologies: ['JavaScript', 'PHP', 'MySQL', 'jQuery', 'CSS3'],
@@ -29,7 +43,7 @@ const Projects = () => {
   const certificates = [
     {
       id: 1,
-      title: 'MERN Stack Web Development',
+      title: 'Full Stack Web Development',
       issuer: 'Online Certification',
       date: '2023',
       skills: ['MongoDB', 'Express', 'React', 'Node.js', 'JavaScript']
@@ -119,6 +133,16 @@ const Projects = () => {
                 borderRadius: '2px'
               }}
             ></div>
+            <p 
+              className="mt-3"
+              style={{ 
+                color: '#E1F5FE',
+                fontSize: '1rem',
+                opacity: 0.9
+              }}
+            >
+              Here are some of my recent works and personal projects
+            </p>
           </Col>
         </Row>
 
@@ -145,7 +169,7 @@ const Projects = () => {
                   e.currentTarget.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
                 }}
               >
-                {/* Project Image */}
+                {/* Project Image Header */}
                 <div 
                   style={{
                     height: '200px',
@@ -157,6 +181,7 @@ const Projects = () => {
                     overflow: 'hidden'
                   }}
                 >
+                  {/* Project Icon based on title */}
                   <div 
                     style={{
                       fontSize: '3rem',
@@ -164,23 +189,35 @@ const Projects = () => {
                       opacity: '0.8'
                     }}
                   >
-                    {project.featured && (
-                      <Badge 
-                        bg=""
-                        style={{
-                          position: 'absolute',
-                          top: '10px',
-                          right: '10px',
-                          background: 'linear-gradient(45deg, #F8BBD9, #FF80AB)',
-                          color: '#0D47A1',
-                          border: 'none'
-                        }}
-                      >
-                        Featured
-                      </Badge>
-                    )}
-                    💼
+                    {project.title.includes('Certificate') && '📜'}
+                    {project.title.includes('Clinic') && '🏥'}
+                    {project.title.includes('EthioGregor') && '📱'}
+                    {project.title.includes('Portfolio') && '🎨'}
+                    {project.title.includes('Event') && '🎉'}
+                    {!project.title.includes('Certificate') && 
+                     !project.title.includes('Clinic') && 
+                     !project.title.includes('EthioGregor') && 
+                     !project.title.includes('Portfolio') && 
+                     !project.title.includes('Event') && '💼'}
                   </div>
+                  
+                  {project.featured && (
+                    <Badge 
+                      bg=""
+                      style={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                        background: 'linear-gradient(45deg, #F8BBD9, #FF80AB)',
+                        color: '#0D47A1',
+                        border: 'none',
+                        padding: '0.5rem 1rem',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      ⭐ Featured
+                    </Badge>
+                  )}
                 </div>
 
                 <Card.Body className="p-4">
@@ -198,7 +235,8 @@ const Projects = () => {
                     style={{ 
                       color: '#455A64',
                       lineHeight: '1.6',
-                      marginBottom: '1.5rem'
+                      marginBottom: '1.5rem',
+                      minHeight: '80px'
                     }}
                   >
                     {project.description}
@@ -258,10 +296,20 @@ const Projects = () => {
                 borderRadius: '2px'
               }}
             ></div>
+            <p 
+              className="mt-3"
+              style={{ 
+                color: '#E1F5FE',
+                fontSize: '1rem',
+                opacity: 0.9
+              }}
+            >
+              Professional certifications and recognition
+            </p>
           </Col>
         </Row>
 
-        {/* Certificates Grid */}
+        {/* Certificates Grid - UPDATED with Full Stack instead of MERN */}
         <Row className="g-4 justify-content-center">
           {certificates.map((certificate) => (
             <Col lg={4} md={6} key={certificate.id}>
@@ -290,7 +338,9 @@ const Projects = () => {
                         marginBottom: '1rem'
                       }}
                     >
-                      🏆
+                      {certificate.title.includes('Full Stack') && '🌟'}
+                      {certificate.title.includes('UI/UX') && '🎨'}
+                      {certificate.title.includes('Mobile') && '📱'}
                     </div>
                   </div>
                   
@@ -349,6 +399,15 @@ const Projects = () => {
               </Card>
             </Col>
           ))}
+        </Row>
+
+        {/* Project Stats or Call to Action */}
+        <Row className="mt-5">
+          <Col className="text-center">
+            <p style={{ color: '#E1F5FE', fontSize: '0.9rem' }}>
+              🚀 Total Projects: {projects.length} • ⭐ Featured Projects: {projects.filter(p => p.featured).length}
+            </p>
+          </Col>
         </Row>
       </Container>
 

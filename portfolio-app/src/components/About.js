@@ -4,7 +4,20 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 const About = () => {
   const [activeTab, setActiveTab] = useState('story');
 
-  // Categorized Skills with Logos
+  // Navigation functions
+  const nextTab = () => {
+    if (activeTab === 'story') setActiveTab('skills');
+    if (activeTab === 'skills') setActiveTab('hobbies');
+    if (activeTab === 'hobbies') setActiveTab('story');
+  };
+
+  const prevTab = () => {
+    if (activeTab === 'story') setActiveTab('hobbies');
+    if (activeTab === 'skills') setActiveTab('story');
+    if (activeTab === 'hobbies') setActiveTab('skills');
+  };
+
+  // Categorized Skills with Logos (Added Spring Boot)
   const skillCategories = [
     {
       title: 'Programming Languages',
@@ -32,6 +45,7 @@ const About = () => {
       skills: [
         { name: 'Express', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
         { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+        { name: 'Spring Boot', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg' },
         { name: 'MySQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' }
       ]
     },
@@ -52,6 +66,13 @@ const About = () => {
     { icon: '✈️', name: 'Travel' },
     { icon: '🎵', name: 'Music' }
   ];
+
+  // Get current tab icon for display
+  const getTabIcon = () => {
+    if (activeTab === 'story') return '📖';
+    if (activeTab === 'skills') return '💻';
+    return '🎯';
+  };
 
   return (
     <section 
@@ -128,7 +149,37 @@ const About = () => {
         {/* Tab Navigation */}
         <Row className="mb-4">
           <Col className="text-center">
-            <div className="d-flex flex-wrap justify-content-center gap-3">
+            <div className="d-flex flex-wrap justify-content-center gap-3 align-items-center">
+              {/* Previous Button */}
+              <Button
+                onClick={prevTab}
+                className="px-3 py-3 fw-semibold"
+                style={{
+                  background: 'rgba(248, 187, 217, 0.2)',
+                  border: '2px solid #F8BBD9',
+                  color: '#F8BBD9',
+                  borderRadius: '50px',
+                  fontSize: '1.2rem',
+                  transition: 'all 0.3s ease',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'rgba(248, 187, 217, 0.4)';
+                  e.target.style.transform = 'translateX(-3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'rgba(248, 187, 217, 0.2)';
+                  e.target.style.transform = 'translateX(0)';
+                }}
+              >
+                ←
+              </Button>
+
+              {/* Tab Buttons */}
               <Button
                 onClick={() => setActiveTab('story')}
                 className="px-4 py-3 fw-semibold"
@@ -216,8 +267,44 @@ const About = () => {
                   }
                 }}
               >
-                🎯 Hobbies
+                🎯 Hobbies & Interests
               </Button>
+
+              {/* Next Button */}
+              <Button
+                onClick={nextTab}
+                className="px-3 py-3 fw-semibold"
+                style={{
+                  background: 'rgba(248, 187, 217, 0.2)',
+                  border: '2px solid #F8BBD9',
+                  color: '#F8BBD9',
+                  borderRadius: '50px',
+                  fontSize: '1.2rem',
+                  transition: 'all 0.3s ease',
+                  width: '50px',
+                  height: '50px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = 'rgba(248, 187, 217, 0.4)';
+                  e.target.style.transform = 'translateX(3px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = 'rgba(248, 187, 217, 0.2)';
+                  e.target.style.transform = 'translateX(0)';
+                }}
+              >
+                →
+              </Button>
+            </div>
+            
+            {/* Current Tab Indicator */}
+            <div className="mt-3">
+              <small style={{ color: '#F8BBD9', opacity: 0.7 }}>
+                Currently viewing: {getTabIcon()} {activeTab === 'story' ? 'My Story' : activeTab === 'skills' ? 'Technical Skills' : 'Hobbies & Interests'}
+              </small>
             </div>
           </Col>
         </Row>
@@ -225,7 +312,7 @@ const About = () => {
         {/* Content Area */}
         <Row>
           <Col>
-            {/* My Story Tab */}
+            {/* My Story Tab - UPDATED WITH YOUR TEXT */}
             {activeTab === 'story' && (
               <Card 
                 className="border-0 shadow-lg"
@@ -234,12 +321,12 @@ const About = () => {
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(10px)',
                   border: '1px solid rgba(248, 187, 217, 0.3)',
-                  animation: 'fadeIn 0.5s ease-in'
+                  animation: 'fadeIn 0.4s ease-out'
                 }}
               >
                 <Card.Body className="p-5">
-                  <Row className="align-items-center">
-                    <Col lg={8}>
+                  <Row>
+                    <Col lg={12}>
                       <h3 
                         className="fw-bold mb-4"
                         style={{ 
@@ -249,7 +336,7 @@ const About = () => {
                           WebkitTextFillColor: 'transparent'
                         }}
                       >
-                        Passionate Developer & Creative Thinker
+                        My Journey in Tech
                       </h3>
                       
                       <div style={{ lineHeight: '1.8' }}>
@@ -260,10 +347,7 @@ const About = () => {
                             fontSize: '1.1rem'
                           }}
                         >
-                          Hello! I'm Hawi Samuel, a passionate web developer with a love for creating 
-                          beautiful and functional digital experiences. I'm currently pursuing my 
-                          education at <strong style={{ color: '#880E4F' }}>Arba Minch University</strong>, 
-                          where I'm honing my skills in modern web technologies.
+                          Hello! I'm Hawi Samuel, a <strong style={{ color: '#880E4F' }}>Full Stack Developer, Virtual Assistant, and Cyber Security PKI Engineer</strong> passionate about creating secure, efficient, and user-friendly digital solutions.
                         </p>
                         
                         <p 
@@ -273,10 +357,7 @@ const About = () => {
                             fontSize: '1.1rem'
                           }}
                         >
-                          My journey in web development started 3 years ago, and since then 
-                          I've been constantly learning and adapting to new technologies. 
-                          I believe in writing clean, efficient code and creating user 
-                          experiences that are both intuitive and delightful.
+                          I studied at <strong style={{ color: '#880E4F' }}>Arba Minch University</strong>, where I've developed a unique skill set that bridges the gap between frontend aesthetics, backend functionality, and enterprise-grade security.
                         </p>
 
                         <p 
@@ -286,58 +367,58 @@ const About = () => {
                             fontSize: '1.1rem'
                           }}
                         >
-                          When I'm not coding or studying, you can find me exploring new design trends, 
-                          contributing to open-source projects, or enjoying outdoor activities. 
-                          I'm always excited to take on new challenges and collaborate on 
-                          innovative projects.
+                          My journey took an exciting turn during my internship at <strong style={{ color: '#880E4F' }}>INSA (Information Network Security Agency)</strong>, where I worked in the <strong style={{ color: '#880E4F' }}>Cyber Security PKI Operations and Development</strong> domain. This experience deepened my understanding of digital certificates, encryption, and secure identity management while giving me hands-on experience in real-world security infrastructure.
                         </p>
-                      </div>
-                    </Col>
-                    
-                    <Col lg={4}>
-                      <div className="text-center">
-                        {/* Stats */}
-                        <div className="mb-4 p-4" style={{
-                          background: 'rgba(248, 187, 217, 0.1)',
-                          borderRadius: '15px',
-                          border: '1px solid rgba(248, 187, 217, 0.3)'
-                        }}>
-                          <h3 
-                            className="fw-bold mb-2"
-                            style={{ color: '#880E4F' }}
-                          >
-                            50+
-                          </h3>
-                          <p style={{ color: '#455A64', fontWeight: '500' }}>Projects Completed</p>
+
+                        <div 
+                          className="mb-4 p-4"
+                          style={{
+                            background: 'rgba(248, 187, 217, 0.1)',
+                            borderRadius: '15px',
+                            borderLeft: '4px solid #F8BBD9'
+                          }}
+                        >
+                          <p style={{ color: '#455A64', fontSize: '1rem', marginBottom: '0.5rem' }}>
+                            <strong style={{ color: '#880E4F' }}>Today, I combine three powerful roles:</strong>
+                          </p>
+                          <ul style={{ color: '#455A64', fontSize: '1rem', marginBottom: '0' }}>
+                            <li>• As a <strong>Full Stack Developer</strong>, I build beautiful, responsive web applications</li>
+                            <li>• As a <strong>Virtual Assistant</strong>, I streamline operations and boost productivity</li>
+                            <li>• As a <strong>PKI Engineer</strong>, I secure digital identities and protect sensitive data</li>
+                          </ul>
                         </div>
-                        
-                        <div className="mb-4 p-4" style={{
-                          background: 'rgba(248, 187, 217, 0.1)',
-                          borderRadius: '15px',
-                          border: '1px solid rgba(248, 187, 217, 0.3)'
-                        }}>
-                          <h3 
-                            className="fw-bold mb-2"
-                            style={{ color: '#880E4F' }}
-                          >
-                            3+
-                          </h3>
-                          <p style={{ color: '#455A64', fontWeight: '500' }}>Years Experience</p>
-                        </div>
-                        
-                        <div className="p-4" style={{
-                          background: 'rgba(248, 187, 217, 0.1)',
-                          borderRadius: '15px',
-                          border: '1px solid rgba(248, 187, 217, 0.3)'
-                        }}>
-                          <h3 
-                            className="fw-bold mb-2"
-                            style={{ color: '#880E4F' }}
-                          >
-                            100%
-                          </h3>
-                          <p style={{ color: '#455A64', fontWeight: '500' }}>Client Satisfaction</p>
-                        </div>
+
+                        <p 
+                          className="mb-4"
+                          style={{ 
+                            color: '#455A64',
+                            fontSize: '1.1rem'
+                          }}
+                        >
+                          <strong style={{ color: '#880E4F' }}>What drives me?</strong> A relentless commitment to learn, adapt, and grow. Technology evolves fast, and I evolve with it — constantly exploring new tools, frameworks, and security practices to stay ahead.
+                        </p>
+
+                        <p 
+                          className="mb-4"
+                          style={{ 
+                            color: '#455A64',
+                            fontSize: '1.1rem'
+                          }}
+                        >
+                          When I'm not coding or securing systems, you'll find me contributing to open-source projects, exploring cybersecurity trends, or finding innovative ways to solve everyday problems with technology. <strong style={{ color: '#880E4F' }}>I also love writing.</strong>
+                        </p>
+
+                        <p 
+                          className="mb-0"
+                          style={{ 
+                            color: '#0D47A1',
+                            fontSize: '1.1rem',
+                            fontStyle: 'italic',
+                            fontWeight: '500'
+                          }}
+                        >
+                          I'm always open to new challenges, collaborations, and opportunities where I can make a meaningful impact. Let's build something secure and extraordinary together! ✨
+                        </p>
                       </div>
                     </Col>
                   </Row>
@@ -345,7 +426,7 @@ const About = () => {
               </Card>
             )}
 
-            {/* Technical Skills Tab */}
+            {/* Technical Skills Tab - UPDATED WITH SPRING BOOT */}
             {activeTab === 'skills' && (
               <Card 
                 className="border-0 shadow-lg"
@@ -354,7 +435,7 @@ const About = () => {
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(10px)',
                   border: '1px solid rgba(248, 187, 217, 0.3)',
-                  animation: 'fadeIn 0.5s ease-in'
+                  animation: 'fadeIn 0.4s ease-out'
                 }}
               >
                 <Card.Body className="p-4">
@@ -417,8 +498,8 @@ const About = () => {
                                     src={skill.logo} 
                                     alt={skill.name}
                                     style={{
-                                      width: '24px',
-                                      height: '24px',
+                                      width: '28px',
+                                      height: '28px',
                                       marginBottom: '0.3rem',
                                       filter: 'grayscale(0.3)',
                                       transition: 'all 0.3s ease'
@@ -463,7 +544,7 @@ const About = () => {
                   background: 'rgba(255, 255, 255, 0.95)',
                   backdropFilter: 'blur(10px)',
                   border: '1px solid rgba(248, 187, 217, 0.3)',
-                  animation: 'fadeIn 0.5s ease-in'
+                  animation: 'fadeIn 0.4s ease-out'
                 }}
               >
                 <Card.Body className="p-5">
@@ -535,6 +616,13 @@ const About = () => {
                       </Col>
                     ))}
                   </Row>
+                  
+                  {/* Added a fun writing note */}
+                  <div className="text-center mt-4">
+                    <p style={{ color: '#880E4F', fontSize: '0.9rem', fontStyle: 'italic' }}>
+                      ✍️ "I also love writing" — always capturing thoughts and ideas
+                    </p>
+                  </div>
                 </Card.Body>
               </Card>
             )}

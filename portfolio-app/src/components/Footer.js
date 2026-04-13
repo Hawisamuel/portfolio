@@ -14,8 +14,11 @@ const Footer = () => {
   const services = [
     'Web Development',
     'UI/UX Design',
+    'PKI Solutions',
+    'Responsive Design',
     'React Applications',
-    'Responsive Design'
+    'Mobile Application Development'
+    
   ];
 
   const socialLinks = [
@@ -99,7 +102,7 @@ const Footer = () => {
                   fontSize: '1rem'
                 }}
               >
-                Passionate MERN stack developer creating beautiful, functional, 
+                Passionate Full stack developer, VA and PKI specialist creating beautiful, functional, 
                 and user-friendly digital experiences. Let's build something 
                 amazing together!
               </p>
@@ -291,7 +294,7 @@ const Footer = () => {
                 }}
               >
                 <i className="bi bi-geo-alt-fill me-2" style={{ color: '#F8BBD9' }}></i>
-                <span>Arba Minch, ETHIOPIA</span>
+                <span>Addis Ababa, ETHIOPIA</span>
               </div>
             </div>
 
@@ -339,8 +342,8 @@ const Footer = () => {
                   style={{
                     color: '#E1F5FE',
                     fontSize: '0.9rem',
-                    marginBottom: '1rem',
-                    marginBottom: '0'
+                    marginBottom: '1rem'
+                    
                   }}
                 >
                   © {currentYear} Hawi Samuel. All rights reserved.
