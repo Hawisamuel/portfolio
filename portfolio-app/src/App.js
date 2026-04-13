@@ -1,4 +1,5 @@
 import React from 'react';
+import { HashRouter as Router } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './App.css'; // Optional custom CSS file
@@ -13,33 +14,35 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      {/* Navigation */}
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section id="home">
-        <Hero />
-      </section>
-      
-      {/* About Section */}
-      <section id="about">
-        <About />
-      </section>
-      
-      {/* Projects Section */}
-      <section id="projects">
-        <Projects />
-      </section>
-      
-      {/* Contact Section */}
-      <section id="contact">
-        <Contact />
-      </section>
-      
-      {/* Footer */}
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        {/* Navigation */}
+        <Navbar />
+        
+        {/* Hero Section */}
+        <section id="home">
+          <Hero />
+        </section>
+        
+        {/* About Section */}
+        <section id="about">
+          <About />
+        </section>
+        
+        {/* Projects Section */}
+        <section id="projects">
+          <Projects />
+        </section>
+        
+        {/* Contact Section */}
+        <section id="contact">
+          <Contact />
+        </section>
+        
+        {/* Footer */}
+        <Footer />
+      </div>
+    </Router>
   );
 }
 
